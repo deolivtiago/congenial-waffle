@@ -1,9 +1,7 @@
 package com.clarxlabs.ellion.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +29,11 @@ public class Role {
     @ColumnDefault("'{}'::text[]")
     @Column(name = "permissions", nullable = false)
     private Set<String> permissions = new HashSet<>();
+    
+    @JsonBackReference
+    @Builder.Default
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private Set<User> users = new HashSet<>();
 
     @ColumnDefault("now()")
     @UpdateTimestamp
