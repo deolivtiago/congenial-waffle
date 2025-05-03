@@ -2,14 +2,12 @@ package com.clarxlabs.ellion.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.FractionalSeconds;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -25,11 +23,12 @@ public class Role {
     @Id
     private String id;
 
-    @Builder.Default
+    @Generated
     @ColumnDefault("'{}'::text[]")
+    @Builder.Default
     @Column(name = "permissions", nullable = false)
     private Set<String> permissions = new HashSet<>();
-    
+
     @JsonBackReference
     @Builder.Default
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)

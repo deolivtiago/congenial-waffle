@@ -3,14 +3,12 @@ package com.clarxlabs.ellion.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.FractionalSeconds;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -38,22 +36,25 @@ public class User {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Generated
     @ColumnDefault("''")
     @Builder.Default
     @Column(name = "avatar_url", nullable = false)
     private String avatarUrl = "";
 
+    @Generated
     @ColumnDefault("false")
     @Builder.Default
     @Column(name = "is_verified", nullable = false)
     private boolean isVerified = false;
 
+    @Generated
     @ColumnDefault("'user'")
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
-    
+
     @JsonBackReference
     @Builder.Default
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

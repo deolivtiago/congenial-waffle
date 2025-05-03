@@ -1,24 +1,24 @@
 package com.clarxlabs.ellion.controllers.dtos;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
 
 public record UserData(
-        @Min(value = 2)
-        @Max(value = 255)
         @NotEmpty
+        @Length(min = 2, max = 160)
         String fullName,
 
-        @Email
-        @Min(value = 3)
-        @Max(value = 160)
         @NotEmpty
+        @Length(min = 3, max = 160)
+        @Email
         String email,
 
-        @Pattern(regexp = "[A-Za-z0-9]", message = "must have numbers, lower and upper case character(s)")
-        @Pattern(regexp = "[!?@#$%^&*+._\\-]", message = "must have special character(s). Ex: !?@#$%^&*+._-")
-        @Min(value = 6)
-        @Max(value = 72)
         @NotEmpty
+        @Length(min = 6, max = 72)
+        @Pattern(regexp = "^(?=.*[^a-zA-Z0-9])\\S+$", message = "must have special character(s). Ex: !?@#*$%&")
+        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])\\S+$", message = "must have number(s), lower and upper case character(s)")
         String password
 ) {
 }

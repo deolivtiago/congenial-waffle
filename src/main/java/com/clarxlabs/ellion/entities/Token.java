@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.FractionalSeconds;
+import org.hibernate.annotations.Generated;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -28,6 +29,7 @@ public class Token {
     @Column(name = "access", nullable = false, unique = true)
     private String access;
 
+    @Generated
     @ColumnDefault("now() + '1 day'::interval")
     @FractionalSeconds(0)
     @Column(name = "access_expires_at", nullable = false)
@@ -36,6 +38,7 @@ public class Token {
     @Column(name = "refresh", nullable = false, unique = true)
     private String refresh;
 
+    @Generated
     @ColumnDefault("now() + '7 days'::interval")
     @FractionalSeconds(0)
     @Column(name = "refresh_expires_at", nullable = false)
